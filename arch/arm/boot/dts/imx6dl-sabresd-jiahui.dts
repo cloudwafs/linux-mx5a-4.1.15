@@ -1,0 +1,56 @@
+/*
+ * Copyright (C) 2015 Freescale Semiconductor, Inc.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+#include "imx6dl-sabresd.dts"
+
+&cpu0 {
+	arm-supply = <&reg_arm>;
+	soc-supply = <&reg_soc>;
+};
+
+&gpc {
+	/* use ldo-enable, u-boot will check it and configure */
+	fsl,ldo-bypass = <0>;
+};
+
+&wdog1 {
+	status = "okay";
+};
+
+&wdog2 {
+	status = "disabled";
+};
+
+&iomuxc {
+        jiahui-extern-gpio {
+                pinctrl_jiahuigpio: pluswbgrp {
+                        fsl,pins = <
+                                ////////extern gpio
+                                MX6QDL_PAD_KEY_COL1__GPIO4_IO08 0X80000000
+                                MX6QDL_PAD_KEY_ROW1__GPIO4_IO09 0X80000000
+                                MX6QDL_PAD_GPIO_6__GPIO1_IO06 0X80000000
+                                MX6QDL_PAD_GPIO_3__GPIO1_IO03 0X80000000
+				MX6QDL_PAD_EIM_D24__UART3_TX_DATA       0x1b0b1
+                                MX6QDL_PAD_EIM_D25__UART3_RX_DATA       0x1b0b1
+				
+			>;
+                };
+        };
+};
+
+&uart3 {
+        pinctrl-names = "default";
+        pinctrl-0 = <&pinctrl_jiahuigpio>;
+        status = "okay";
+};
+
+&uart4 {
+        pinctrl-names = "default";
+        pinctrl-0 = <&pinctrl_uart4>;
+        status = "okay";
+};
